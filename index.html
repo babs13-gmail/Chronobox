@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChronoBox — Un message pour plus tard</title>
+<meta name="description" content="Écris un message aujourd'hui, il ne s'ouvrira que le jour que tu choisis.">
+<link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="./" class="nav-logo">Chrono<span class="accent">Box</span></a>
+</nav>
+
+<!-- ============ VUE 1 : ACCUEIL ============ -->
+<main class="view is-active" id="view-home">
+  <div class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <p class="eyebrow">Un message, figé dans le temps</p>
+    <h1 class="hero-title">Écris aujourd'hui.<br>Ouvre plus tard.</h1>
+    <p class="hero-text">
+      ChronoBox scelle ton message — texte, photo — jusqu'à la date que tu
+      choisis. Ni toi ni personne ne peut le rouvrir avant.
+    </p>
+    <button class="btn-primary btn-large" id="startCreateBtn">Créer une capsule</button>
+  </div>
+
+  <div class="open-link">
+    <p class="open-link-label">Tu as déjà un lien de capsule ?</p>
+    <form id="openLinkForm" class="open-link-form">
+      <input type="text" id="openLinkInput" placeholder="Colle le lien ou le code ici">
+      <button type="submit" class="btn-secondary">Ouvrir</button>
+    </form>
+  </div>
+</main>
+
+<!-- ============ VUE 2 : CRÉATION ============ -->
+<main class="view" id="view-create">
+  <div class="form-wrap">
+    <h1 class="page-title">Nouvelle capsule</h1>
+    <p class="page-subtitle">Personne ne pourra la lire avant la date que tu choisis — pas même toi.</p>
+
+    <form id="createForm" class="create-form">
+      <label class="field-label" for="capsuleMessage">Ton message</label>
+      <textarea id="capsuleMessage" rows="6" maxlength="2000" placeholder="Écris ce que tu veux dire..." required></textarea>
+
+      <label class="field-label" for="capsulePhoto">Photo (optionnel)</label>
+      <input type="file" id="capsulePhoto" accept="image/*">
+      <p class="field-hint" id="photoHint"></p>
+
+      <label class="field-label" for="capsuleDate">Date et heure d'ouverture</label>
+      <input type="datetime-local" id="capsuleDate" required>
+
+      <button type="submit" class="btn-primary btn-large" id="submitCreateBtn">Sceller la capsule</button>
+      <p class="form-status" id="createStatus"></p>
+    </form>
+  </div>
+</main>
+
+<!-- ============ VUE 3 : LIEN GÉNÉRÉ ============ -->
+<main class="view" id="view-done">
+  <div class="form-wrap done-wrap">
+    <div class="seal-icon">🔒</div>
+    <h1 class="page-title">Capsule scellée</h1>
+    <p class="page-subtitle">Garde ce lien précieusement — c'est la seule façon d'y accéder.</p>
+
+    <div class="link-box">
+      <input type="text" id="generatedLink" readonly>
+      <button class="btn-secondary" id="copyLinkBtn">Copier</button>
+    </div>
+    <p class="copy-status" id="copyStatus"></p>
+
+    <button class="btn-primary" id="viewMyCapsuleBtn">Voir ma capsule</button>
+  </div>
+</main>
+
+<!-- ============ VUE 4 : CAPSULE (verrouillée ou révélée) ============ -->
+<main class="view" id="view-capsule">
+  <div class="capsule-wrap">
+
+    <div id="capsuleLoading" class="capsule-loading">Chargement...</div>
+
+    <div id="capsuleLocked" class="capsule-locked" hidden>
+      <div class="seal-icon seal-icon-lg">🔒</div>
+      <h1 class="page-title">Capsule scellée</h1>
+      <p class="page-subtitle">Elle s'ouvrira dans :</p>
+      <div class="countdown" id="countdown">
+        <div class="countdown-unit"><span id="cdDays">--</span><label>jours</label></div>
+        <div class="countdown-unit"><span id="cdHours">--</span><label>heures</label></div>
+        <div class="countdown-unit"><span id="cdMinutes">--</span><label>min</label></div>
+        <div class="countdown-unit"><span id="cdSeconds">--</span><label>sec</label></div>
+      </div>
+      <p class="unlock-date" id="unlockDateLabel"></p>
+    </div>
+
+    <div id="capsuleRevealed" class="capsule-revealed" hidden>
+      <p class="eyebrow">Cette capsule s'est ouverte</p>
+      <div class="revealed-photo-wrap" id="revealedPhotoWrap" hidden>
+        <img id="revealedPhoto" alt="Photo de la capsule">
+      </div>
+      <p class="revealed-message" id="revealedMessage"></p>
+    </div>
+
+    <div id="capsuleError" class="capsule-error" hidden>
+      <p>Cette capsule est introuvable. Vérifie le lien.</p>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <p>ChronoBox — Concept par Babacar Diouf</p>
+</footer>
+
+<script src="app.js?v=3"></script>
+<script type="module" src="capsule.js?v=3"></script>
+</body>
+</html>
